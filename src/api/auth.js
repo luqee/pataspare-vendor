@@ -30,6 +30,12 @@ export const getVerifyMail = (query, cb) => {
 	})
 }
 
+export const postLogin = (postData, cb) => {
+	autoAPI.post(`/auth/login`, JSON.stringify(postData))
+	.then((response) => cb(response))
+	.catch((error) => cb(error))
+}
+
 export const getUser = (token, cb) => {
 	autoAPI.get('/auth/user', {
 		headers: {'Authorization': 'Bearer '+ token}
@@ -48,19 +54,13 @@ export const logout = (user, cb) => {
 		}
 	})
 	.then((response) => {
-		if (response.data.status === 201) {
-            cb(response.data.data)
+		if (response.status === 201) {
+            cb(response.data)
         }
 	})
 	.catch((error) => {
 		console.log(error);
 	})
-}
-
-export const postLogin = (postData, cb) => {
-	autoAPI.post(`/auth/login`, JSON.stringify(postData))
-	.then((response) => cb(response))
-	.catch((error) => cb(error))
 }
 
 export const socialSignIn = (postData, cb) => {

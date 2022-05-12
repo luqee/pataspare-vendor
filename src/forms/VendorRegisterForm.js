@@ -6,6 +6,7 @@ import 'react-phone-input-2/dist/style.css'
 import VendorSignupSchema from './schemas/VendorSignupSchema';
 import DivWithErrorHandling from '../components/withErrorHandlingHoc';
 import { postRegister } from '../api/auth';
+import { useNavigate } from 'react-router-dom';
 
 function VendorRegisterForm(){
 	let [showError, setShowError] = useState(false)
