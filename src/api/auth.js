@@ -6,6 +6,30 @@ export const postRegister = (postData, cb) => {
 	.catch((error) => cb(error))
 }
 
+export const resendEmail = (email, cb) => {
+	autoAPI.get(`/auth/email/resend?email=${email}`)
+	.then((response) => {
+		if (response.status === 200) {
+            cb(response.data.data)
+        }
+	})
+	.catch((error) => {
+		console.log(error);
+	})
+}
+
+export const getVerifyMail = (query, cb) => {
+	autoAPI.get(query)
+	.then((response) => {
+		if (response.status === 200) {
+            cb(response.data)
+        }
+	})
+	.catch((error) => {
+		console.log(error);
+	})
+}
+
 export const getUser = (token, cb) => {
 	autoAPI.get('/auth/user', {
 		headers: {'Authorization': 'Bearer '+ token}
@@ -41,30 +65,6 @@ export const postLogin = (postData, cb) => {
 
 export const socialSignIn = (postData, cb) => {
 	autoAPI.post(`/auth/social/google`, JSON.stringify(postData))
-	.then((response) => {
-		if (response.data.status === 200) {
-            cb(response.data)
-        }
-	})
-	.catch((error) => {
-		console.log(error);
-	})
-}
-
-export const resendEmail = (email, cb) => {
-	autoAPI.get(`/auth/email/resend?email=${email}`)
-	.then((response) => {
-		if (response.data.status === 200) {
-            cb(response.data.data)
-        }
-	})
-	.catch((error) => {
-		console.log(error);
-	})
-}
-
-export const getVerifyMail = (query, cb) => {
-	autoAPI.get(query)
 	.then((response) => {
 		if (response.data.status === 200) {
             cb(response.data)
