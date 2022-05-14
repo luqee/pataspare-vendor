@@ -63,23 +63,12 @@ export const logout = (user, cb) => {
 	})
 }
 
-export const socialSignIn = (postData, cb) => {
-	autoAPI.post(`/auth/social/google`, JSON.stringify(postData))
-	.then((response) => {
-		if (response.data.status === 200) {
-            cb(response.data)
-        }
-	})
-	.catch((error) => {
-		console.log(error);
-	})
-}
 
 export const sendResetLink = (payload, cb) => {
 	autoAPI.post(`/auth/password/email`, JSON.stringify(payload))
 	.then((response) => {
-		if (response.data.status === 200) {
-            cb(response.data.data)
+		if (response.status === 200) {
+            cb(response.data)
         }
 	})
 	.catch((error) => {
@@ -90,8 +79,8 @@ export const sendResetLink = (payload, cb) => {
 export const resetPassword = (payload, cb) => {
 	autoAPI.post(`/auth/password/reset`, JSON.stringify(payload))
 	.then((response) => {
-		if (response.data.status === 201) {
-            cb(response.data.data)
+		if (response.status === 201) {
+            cb(response.data)
         }
 	})
 	.catch((error) => {
