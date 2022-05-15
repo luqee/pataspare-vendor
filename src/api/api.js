@@ -33,6 +33,39 @@ export const postShops = (token, payload, cb)=>{
     });
 }
 
+export const postUpdateShops = (token, shopId, payload, cb)=>{
+    autoAPI.post(`/vendor/shpos/${shopId}`, payload, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer '+ token
+        }
+    })
+    .then((response) => {
+        if (response.status === 201) {
+            cb(response.data)
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+export const deleteShops = (token, shopId, cb)=>{
+    autoAPI.post(`/vendor/shpos${shopId}`, {
+        headers: {
+            'Authorization': 'Bearer '+ token
+        }
+    })
+    .then((response) => {
+        if (response.status === 200) {
+            cb(response.data)
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
 export const getCategories = (cb) => {
     autoApi.get('/categories')
     .then((response) => {
