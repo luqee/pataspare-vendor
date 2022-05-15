@@ -4,7 +4,11 @@ import EmailSent from "./EmailSent"
 import Layout from "./Layout"
 import PasswordReset from "./PasswordReset"
 import Recovery from "./Recovery"
+import RequireAuth from "./RequireAuth"
 import UserLogin from "./UserLogin"
+import Dash from "./vendor/Dash"
+import Shops from "./vendor/Shops"
+import VendorPage from "./vendor/VendorPage"
 import VendorRegister from "./VendorRegister"
 
 function Main(){
@@ -17,6 +21,22 @@ function Main(){
                 <Route path="auth/login" element={<UserLogin />} />
                 <Route path="auth/recovery" element={<Recovery />} />
                 <Route path="auth/reset/:token/:email" element={<PasswordReset />} />
+            </Route>
+            <Route path="/vendor" element={
+                <RequireAuth>
+                    <VendorPage />
+                </RequireAuth>
+            } >
+                <Route index element={<Dash />} />
+                <Route path="shops" element={<Shops />} />
+
+
+                {/* <Route path="account" element={<Account />} />
+                <Route path="orders/create" element={<OrderCreate />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="orders/:orderId" element={<ViewOrder />} />
+                <Route path="inquiries" element={<Inquiries />} />
+                <Route path="inquiries/:inquiryId" element={<ViewInquiry />} /> */}
             </Route>
         </Routes>
     )

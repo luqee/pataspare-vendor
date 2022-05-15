@@ -1,4 +1,20 @@
-import autoApi from '../config/config';
+import {autoAPI} from '../config/config';
+
+export const getShops = (token, cb)=>{
+    autoAPI.get(`vendor/shops`,{
+        headers: {
+            'Authorization': 'Bearer '+ token
+        }
+    })
+    .then((response) => {
+        if (response.status === 200){
+            cb(response.data)
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+}
 
 export const getCategories = (cb) => {
     autoApi.get('/categories')
@@ -36,17 +52,7 @@ export const getBrands = (cb)=>{
     })
 }
 
-export const getShops = (cb)=>{
-    autoApi.get('/shops')
-    .then((response) => {
-        if (response.status === 200){
-            cb(response.data)
-        }
-    })
-    .catch((error) => {
-        console.log(error)
-    })
-}
+
 
 
 export const getShop = (shopId, cb)=>{
