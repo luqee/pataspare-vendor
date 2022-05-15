@@ -1,7 +1,7 @@
 import {autoAPI} from '../config/config';
 
 export const getShops = (token, cb)=>{
-    autoAPI.get(`vendor/shops`,{
+    autoAPI.get(`/vendor/shops`,{
         headers: {
             'Authorization': 'Bearer '+ token
         }
@@ -14,6 +14,23 @@ export const getShops = (token, cb)=>{
     .catch((error) => {
         console.log(error)
     })
+}
+
+export const postShops = (token, payload, cb)=>{
+    autoAPI.post('/vendor/shpos', payload, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer '+ token
+        }
+    })
+    .then((response) => {
+        if (response.status === 201) {
+            cb(response.data)
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 }
 
 export const getCategories = (cb) => {
