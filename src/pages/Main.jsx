@@ -15,6 +15,7 @@ import Inventory from "./vendor/Inventory"
 import InventoryItem from "./vendor/InventoryItem"
 import Orders from "./vendor/Orders"
 import ShopIndex from "./vendor/ShopIndex"
+import ShopInquiries from "./vendor/ShopInquiries"
 import ShopInventory from "./vendor/ShopInventory"
 import ShopManager from "./vendor/ShopManager"
 import Shops from "./vendor/Shops"
@@ -60,6 +61,7 @@ function Main(){
                 <Route path="inventory" element={<ShopInventory />} />
                 <Route path="inventory/create" element={<CreatePart />} />
                 <Route path="inventory/:partId" element={<InventoryItem />} />
+                <Route path="inquiries" element={<ShopInquiries />} />
             </Route>
         </Routes>
     )

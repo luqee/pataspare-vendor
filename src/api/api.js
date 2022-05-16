@@ -251,6 +251,21 @@ export const getInquiries = (token, cb) => {
 	})
 }
 
+export const getShopInquiries = (token, shopId, cb) => {
+	autoAPI.get(`/vendor/inquiries/shop/${shopId}`, {
+		headers: {'Authorization': 'Bearer '+ token}
+	})
+	.then((response) => {
+        if (response.status === 200){
+            cb(response.data)
+        }
+    })
+	.catch((error) => {
+		console.log('Error getting inquiries');
+		console.log(error);
+	})
+}
+
 export const postInquiry = (user, payload, cb)=>{
     autoApi.post('/inquiries', JSON.stringify(payload), {
         headers: {
