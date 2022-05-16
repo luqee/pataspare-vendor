@@ -12,6 +12,7 @@ import Dash from "./vendor/Dash"
 import EditShop from "./vendor/EditShop"
 import Inventory from "./vendor/Inventory"
 import InventoryItem from "./vendor/InventoryItem"
+import Orders from "./vendor/Orders"
 import ShopIndex from "./vendor/ShopIndex"
 import ShopInventory from "./vendor/ShopInventory"
 import ShopManager from "./vendor/ShopManager"
@@ -40,6 +41,7 @@ function Main(){
                 <Route path="shops/create" element={<CreateShop />} />
                 <Route path="shops/:shopId" element={<EditShop />} />
                 <Route path="inventory" element={<Inventory />} />
+                <Route path="orders" element={<Orders />} />
                 {/* <Route path="account" element={<Account />} />
                 <Route path="orders/create" element={<OrderCreate />} />
                 <Route path="orders" element={<Orders />} />
