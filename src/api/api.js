@@ -220,6 +220,22 @@ export const getOrders = (token, cb)=>{
     })
 }
 
+export const getShopOrders = (token, shopId, cb)=>{
+    autoAPI.get(`/vendor/orders/shop/${shopId}`,{
+        headers: {
+            'Authorization': 'Bearer '+ token
+        }
+    })
+    .then((response) => {
+        if (response.status === 200){
+            cb(response.data)
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+}
+
 export const putOrder = (token, orderId, payload, cb)=>{
     autoAPI.put(`/vendor/orders/${orderId}`, JSON.stringify(payload), {
         headers: {

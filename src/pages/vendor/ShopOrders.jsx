@@ -1,18 +1,20 @@
 import {Container, Row, Col} from 'react-bootstrap';
-import { getOrders } from '../../api/api';
-import Loader from '../../components/Loader';
-import { useContext, useEffect, useState } from 'react';
+import { getShopOrders } from '../../api/api';
+import { useContext, useState } from 'react';
 import { UserContext } from '../../App';
+import { useParams } from 'react-router-dom';
+import Loader from '../../components/Loader';
 import OrderItemsTable from '../../components/vendor/OrderItemsTable';
 
-function Orders(){
+function ShopOrders(){
     const [orderItems, setOrderItems] = useState([])
     const [loading, setLoading] = useState(true)
     const user = useContext(UserContext).user
+    const params = useParams()
 
     const fetchOrders = () =>{
         setLoading(true)
-        getOrders(user.token, (response)=>{
+        getShopOrders(user.token, params.shopId, (response)=>{
             if(response.status === 200){
                 setLoading(false)
                 setOrderItems(response.data.order_items)
@@ -27,22 +29,17 @@ function Orders(){
         <Container>
             <Row>
                 <Col>
-                <p>Orders in my shops</p>
+                <p>Order Items</p>
                 </Col>
             </Row>
             <Row>
-            </Row>
-            <Row style={{
-                minHeight: `50px`,
-                justifyContent: 'center'
-            }}>
-                <Col lg={12}>
-                <Loader loading={loading} />
-                <OrderItemsTable orderItems={orderItems} />
-                </Col>
+            <Col lg={12}>
+            <Loader loading={loading} />
+            <OrderItemsTable orderItems={orderItems} />
+            </Col>
             </Row>
         </Container>
     )
 }
 
-export default Orders;
+export default ShopOrders;
