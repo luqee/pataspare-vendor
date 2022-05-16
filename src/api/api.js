@@ -83,7 +83,7 @@ export const postUpdateShops = (token, shopId, payload, cb)=>{
 }
 
 export const deleteShops = (token, shopId, cb)=>{
-    autoAPI.delete(`/vendor/shpos${shopId}`, {
+    autoAPI.delete(`/vendor/shops${shopId}`, {
         headers: {
             'Authorization': 'Bearer '+ token
         }
@@ -139,12 +139,43 @@ export const postPart = (token, payload, cb)=>{
     });
 }
 
+export const postUpdatePart = (token, partId, payload, cb)=>{
+    autoAPI.post(`/vendor/parts/${partId}`, payload, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer '+ token
+        }
+    })
+    .then((response) => {
+        if (response.status === 201) {
+            cb(response.data)
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
 
-
-export const getParts = (cb)=>{
-    autoApi.get(`/parts`)
+export const getPart = (partId, cb)=>{
+    autoAPI.get(`/vendor/parts/${partId}`)
     .then((response) => {
         if (response.status === 200){
+            cb(response.data)
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+export const deletePart = (token, partId, cb)=>{
+    autoAPI.delete(`/vendor/parts/${partId}`, {
+        headers: {
+            'Authorization': 'Bearer '+ token
+        }
+    })
+    .then((response) => {
+        if (response.status === 200) {
             cb(response.data)
         }
     })

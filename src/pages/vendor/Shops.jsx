@@ -52,7 +52,7 @@ function Shops() {
                                 <td>{shop.name}</td>
                                 <td>{shop.location}</td>
                                 <td><Link to={{
-                                    pathname: `manage/${shop.id}`,
+                                    pathname: `${shop.id}/manage`,
                                     state: {shop: shop}
                                 }}>
                                         <Button>Manage</Button>

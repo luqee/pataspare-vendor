@@ -128,7 +128,7 @@ function EditShop(){
         postUpdateShops(user.token, shop.id, formData, (response) => {
             if (response.status === 201){
                 actions.setSubmitting(false);
-                navigate('/vendor/shpos')
+                navigate('/vendor/shops')
             }else{
                 actions.setSubmitting(false);
                 console.log(error);
@@ -226,7 +226,7 @@ function EditShop(){
                     <Form.Group controlId="shopImage">
                     <Form.Label>Shop Image:</Form.Label>
                     <Form.Control type="file" placeholder="Upload shop image" onChange={(event) => {
-                        this.showThumb(event)
+                        showThumb(event)
                         setFieldValue("shopImage", event.currentTarget.files[0]);
                         
                     }}/>
