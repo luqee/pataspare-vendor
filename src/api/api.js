@@ -16,6 +16,22 @@ export const getShops = (token, cb)=>{
     })
 }
 
+export const getShop = (token, shopId, cb)=>{
+    autoAPI.get(`/vendor/shops${shopId}`,{
+        headers: {
+            'Authorization': 'Bearer '+ token
+        }
+    })
+    .then((response) => {
+        if (response.status === 200){
+            cb(response.data)
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+}
+
 export const getShopParts = (token, shopId, cb)=>{
     autoAPI.get(`/vendor/parts/shop/${shopId}`,{
         headers: {
@@ -33,7 +49,7 @@ export const getShopParts = (token, shopId, cb)=>{
 }
 
 export const postShops = (token, payload, cb)=>{
-    autoAPI.post('/vendor/shpos', payload, {
+    autoAPI.post('/vendor/shops', payload, {
         headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': 'Bearer '+ token
@@ -50,7 +66,7 @@ export const postShops = (token, payload, cb)=>{
 }
 
 export const postUpdateShops = (token, shopId, payload, cb)=>{
-    autoAPI.post(`/vendor/shpos/${shopId}`, payload, {
+    autoAPI.post(`/vendor/shops/${shopId}`, payload, {
         headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': 'Bearer '+ token
@@ -67,7 +83,7 @@ export const postUpdateShops = (token, shopId, payload, cb)=>{
 }
 
 export const deleteShops = (token, shopId, cb)=>{
-    autoAPI.post(`/vendor/shpos${shopId}`, {
+    autoAPI.delete(`/vendor/shpos${shopId}`, {
         headers: {
             'Authorization': 'Bearer '+ token
         }
@@ -82,20 +98,20 @@ export const deleteShops = (token, shopId, cb)=>{
     });
 }
 
-export const getCategories = (cb) => {
-    autoApi.get('/categories')
+export const getBrands = (cb)=>{
+    autoAPI.get('/brands')
     .then((response) => {
-        if (response.data.status === 200){
-            cb(response.data.data.categories)
+        if (response.status === 200){
+            cb(response.data)
         }
     })
     .catch((error) => {
-        console.log('Woops an error '+error);
+        console.log(error)
     })
 }
 
-export const getCategoriesPreview = (cb) => {
-    autoApi.get('/categories?preview=true')
+export const getCategories = (cb) => {
+    autoAPI.get('/categories')
     .then((response) => {
         if (response.status === 200){
             cb(response.data)
@@ -106,24 +122,15 @@ export const getCategoriesPreview = (cb) => {
     })
 }
 
-export const getBrands = (cb)=>{
-    autoApi.get('/brands')
-    .then((response) => {
-        if (response.data.status === 200){
-            cb(response.data.data.brands)
+export const postPart = (token, payload, cb)=>{
+    autoAPI.post('/vendor/parts', payload, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer '+ token
         }
     })
-    .catch((error) => {
-        console.log(error)
-    })
-}
-
-
-
-export const getSearch = (queryString, cb)=>{
-    autoApi.get(`/search?${queryString}`)
     .then((response) => {
-        if (response.data.status === 200){
+        if (response.status === 201) {
             cb(response.data)
         }
     })
@@ -131,6 +138,8 @@ export const getSearch = (queryString, cb)=>{
         console.log(error);
     });
 }
+
+
 
 export const getParts = (cb)=>{
     autoApi.get(`/parts`)

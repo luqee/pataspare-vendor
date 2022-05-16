@@ -3,6 +3,7 @@ import {Container, Row, Col, Button} from 'react-bootstrap';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
 import PartsTable from '../../components/vendor/PartsTable';
+import { getShopParts } from '../../api/api';
 
 function ShopInventory(){
     const location = useLocation()
@@ -10,8 +11,8 @@ function ShopInventory(){
     const [parts, setParts] = useState([])
     const params = useParams()
 
-    const fetchShop = () => {
-        getShop(user.token, params.shopId, (response)=>{
+    const fetchShopParts = () => {
+        getShopParts(user.token, params.shopId, (response)=>{
             if (response.status === 200){
                 setParts(response.data.parts)
             }
@@ -20,11 +21,11 @@ function ShopInventory(){
     
     useEffect(()=>{
         if (!location.state) {
-            fetchShop()
+            fetchShopParts()
         }else{
             setParts(location.state.shop.parts)
         }
-    })
+    }, [])
 
     let shop = parts[0].shop
     let shopName = ''

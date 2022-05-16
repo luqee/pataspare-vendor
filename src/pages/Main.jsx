@@ -6,6 +6,7 @@ import PasswordReset from "./PasswordReset"
 import Recovery from "./Recovery"
 import RequireAuth from "./RequireAuth"
 import UserLogin from "./UserLogin"
+import CreatePart from "./vendor/CreatePart"
 import CreateShop from "./vendor/CreateShop"
 import Dash from "./vendor/Dash"
 import EditShop from "./vendor/EditShop"
@@ -49,7 +50,8 @@ function Main(){
                 </RequireAuth>
             }>
                 <Route index element={<ShopIndex />} />
-                <Route path="parts" element={<ShopInventory />} />
+                <Route path="inventory" element={<ShopInventory />} />
+                <Route path="inventory/create" element={<CreatePart />} />
             </Route>
         </Routes>
     )
