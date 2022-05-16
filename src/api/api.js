@@ -16,6 +16,22 @@ export const getShops = (token, cb)=>{
     })
 }
 
+export const getShopParts = (token, shopId, cb)=>{
+    autoAPI.get(`/vendor/parts/shop/${shopId}`,{
+        headers: {
+            'Authorization': 'Bearer '+ token
+        }
+    })
+    .then((response) => {
+        if (response.status === 200){
+            cb(response.data)
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+}
+
 export const postShops = (token, payload, cb)=>{
     autoAPI.post('/vendor/shpos', payload, {
         headers: {
@@ -103,19 +119,6 @@ export const getBrands = (cb)=>{
 }
 
 
-
-
-export const getShop = (shopId, cb)=>{
-    autoApi.get(`/shops/${shopId}`)
-    .then((response) => {
-        if (response.status === 200){
-            cb(response.data)
-        }
-    })
-    .catch((error) => {
-        console.log(error)
-    })
-}
 
 export const getSearch = (queryString, cb)=>{
     autoApi.get(`/search?${queryString}`)

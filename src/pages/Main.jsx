@@ -10,6 +10,7 @@ import CreateShop from "./vendor/CreateShop"
 import Dash from "./vendor/Dash"
 import EditShop from "./vendor/EditShop"
 import ShopIndex from "./vendor/ShopIndex"
+import ShopInventory from "./vendor/ShopInventory"
 import ShopManager from "./vendor/ShopManager"
 import Shops from "./vendor/Shops"
 import VendorPage from "./vendor/VendorPage"
@@ -48,6 +49,7 @@ function Main(){
                 </RequireAuth>
             }>
                 <Route index element={<ShopIndex />} />
+                <Route path="parts" element={<ShopInventory />} />
             </Route>
         </Routes>
     )
