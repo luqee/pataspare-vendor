@@ -236,6 +236,21 @@ export const putOrder = (token, orderId, payload, cb)=>{
     })
 }
 
+export const getInquiries = (token, cb) => {
+	autoAPI.get(`/vendor/inquiries`, {
+		headers: {'Authorization': 'Bearer '+ token}
+	})
+	.then((response) => {
+        if (response.status === 200){
+            cb(response.data)
+        }
+    })
+	.catch((error) => {
+		console.log('Error getting inquiries');
+		console.log(error);
+	})
+}
+
 export const postInquiry = (user, payload, cb)=>{
     autoApi.post('/inquiries', JSON.stringify(payload), {
         headers: {
@@ -265,16 +280,6 @@ export const getOrder = (orderId, user, cb) => {
 	})
 }
 
-export const getInquiries = (user, cb) => {
-	autoApi.get(`/inquiries`, {
-		headers: {'Authorization': 'Bearer '+ user.token}
-	})
-	.then((response) => cb(response.data))
-	.catch((error) => {
-		console.log('Error getting inquiries');
-		console.log(error);
-	})
-}
 
 export const getInquiry = (inquiryId, user, cb) => {
 	autoApi.get(`/inquiries/${inquiryId}`, {
