@@ -266,21 +266,36 @@ export const getShopInquiries = (token, shopId, cb) => {
 	})
 }
 
-export const postInquiry = (user, payload, cb)=>{
-    autoApi.post('/inquiries', JSON.stringify(payload), {
-        headers: {
-            'Authorization': 'Bearer '+ user.token
-        }
+export const postReplyInquiry = (token, inquiryId, payload, cb) => {
+    autoAPI.post(`/inquiries/${inquiryId}/replies`, JSON.stringify(payload), {
+        headers: {'Authorization': 'Bearer '+ token}
     })
     .then((response) => {
-        if (response.data.status === 201) {
-            cb(response.data.data)
+        if(response.status === 201){
+            cb(response.data)
         }
     })
-    .catch((error) => {
-        console.log(error);
-    });
+	.catch((error) => {
+		console.log('Error posting reply');
+		console.log(error);
+	})
 }
+
+export const getInquiry = (token, inquiryId, cb) => {
+	autoAPI.get(`/inquiries/${inquiryId}`, {
+		headers: {'Authorization': 'Bearer '+ token}
+	})
+	.then((response) => {
+        if(response.status === 200){
+            cb(response.data)
+        }
+    })
+	.catch((error) => {
+		console.log('Error getting inquiry');
+		console.log(error);
+	})
+}
+
 
 
 
@@ -296,28 +311,5 @@ export const getOrder = (orderId, user, cb) => {
 }
 
 
-export const getInquiry = (inquiryId, user, cb) => {
-	autoApi.get(`/inquiries/${inquiryId}`, {
-		headers: {'Authorization': 'Bearer '+ user.token}
-	})
-	.then((response) => cb(response.data))
-	.catch((error) => {
-		console.log('Error getting inquiry');
-		console.log(error);
-	})
-}
 
-export const postReplyInquiry = (inquiryId, payload, user, cb) => {
-    autoApi.post(`/inquiries/${inquiryId}/replies`, JSON.stringify(payload), {
-        headers: {'Authorization': 'Bearer '+ user.token}
-    })
-    .then((response) => {
-        if(response.status === 201){
-            cb(response.data)
-        }
-    })
-	.catch((error) => {
-		console.log('Error posting reply');
-		console.log(error);
-	})
-}
+
