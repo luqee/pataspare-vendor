@@ -10,6 +10,7 @@ import CreatePart from "./vendor/CreatePart"
 import CreateShop from "./vendor/CreateShop"
 import Dash from "./vendor/Dash"
 import EditShop from "./vendor/EditShop"
+import Inventory from "./vendor/Inventory"
 import InventoryItem from "./vendor/InventoryItem"
 import ShopIndex from "./vendor/ShopIndex"
 import ShopInventory from "./vendor/ShopInventory"
@@ -38,6 +39,7 @@ function Main(){
                 <Route path="shops" element={<Shops />} />
                 <Route path="shops/create" element={<CreateShop />} />
                 <Route path="shops/:shopId" element={<EditShop />} />
+                <Route path="inventory" element={<Inventory />} />
                 {/* <Route path="account" element={<Account />} />
                 <Route path="orders/create" element={<OrderCreate />} />
                 <Route path="orders" element={<Orders />} />
@@ -45,7 +47,7 @@ function Main(){
                 <Route path="inquiries" element={<Inquiries />} />
                 <Route path="inquiries/:inquiryId" element={<ViewInquiry />} /> */}
             </Route>
-            <Route path="/vendor/shops/manage/:shopId" element={
+            <Route path="/vendor/shops/:shopId/manage" element={
                 <RequireAuth>
                     <ShopManager />
                 </RequireAuth>

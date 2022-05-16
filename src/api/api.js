@@ -157,7 +157,11 @@ export const postUpdatePart = (token, partId, payload, cb)=>{
 }
 
 export const getPart = (partId, cb)=>{
-    autoAPI.get(`/vendor/parts/${partId}`)
+    autoAPI.get(`/vendor/parts/${partId}`, {
+        headers: {
+            'Authorization': 'Bearer '+ token
+        }
+    })
     .then((response) => {
         if (response.status === 200){
             cb(response.data)
@@ -183,6 +187,24 @@ export const deletePart = (token, partId, cb)=>{
         console.log(error);
     });
 }
+
+export const getParts = (token, cb)=>{
+    autoAPI.get(`/vendor/parts`,{
+        headers: {
+            'Authorization': 'Bearer '+ token
+        }
+    })
+    .then((response) => {
+        if (response.status === 200){
+            cb(response.data)
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+}
+
+
 
 export const postInquiry = (user, payload, cb)=>{
     autoApi.post('/inquiries', JSON.stringify(payload), {

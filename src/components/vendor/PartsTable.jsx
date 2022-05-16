@@ -24,7 +24,7 @@ function PartsTable({parts}){
                         <td>{part.stock}</td>
                         <td>
                             <Link to={{
-                                pathname: `${part.id}`,
+                                pathname: navigate(`/vendor/shops/${part.shop.id}/manage/inventory/${part.id}`),
                                 state: {part: part}
                             }}>
                             <Button>View</Button>
