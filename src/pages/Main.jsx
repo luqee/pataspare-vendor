@@ -9,6 +9,8 @@ import UserLogin from "./UserLogin"
 import CreateShop from "./vendor/CreateShop"
 import Dash from "./vendor/Dash"
 import EditShop from "./vendor/EditShop"
+import ShopIndex from "./vendor/ShopIndex"
+import ShopManager from "./vendor/ShopManager"
 import Shops from "./vendor/Shops"
 import VendorPage from "./vendor/VendorPage"
 import VendorRegister from "./VendorRegister"
@@ -33,14 +35,19 @@ function Main(){
                 <Route path="shops" element={<Shops />} />
                 <Route path="shops/create" element={<CreateShop />} />
                 <Route path="shops/:shopId" element={<EditShop />} />
-
-
                 {/* <Route path="account" element={<Account />} />
                 <Route path="orders/create" element={<OrderCreate />} />
                 <Route path="orders" element={<Orders />} />
                 <Route path="orders/:orderId" element={<ViewOrder />} />
                 <Route path="inquiries" element={<Inquiries />} />
                 <Route path="inquiries/:inquiryId" element={<ViewInquiry />} /> */}
+            </Route>
+            <Route path="/vendor/shops/manage/:shopId" element={
+                <RequireAuth>
+                    <ShopManager />
+                </RequireAuth>
+            }>
+                <Route index element={<ShopIndex />} />
             </Route>
         </Routes>
     )
