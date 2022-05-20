@@ -51,10 +51,7 @@ function Shops() {
                                 <td><Image width='100' height='100' src={`${urls.hostRoot}/${shop.shop_image}`} rounded /></td>
                                 <td>{shop.name}</td>
                                 <td>{shop.location}</td>
-                                <td><Link to={{
-                                    pathname: `${shop.id}/manage`,
-                                    state: {shop: shop}
-                                }}>
+                                <td><Link to={`${shop.id}/manage`}>
                                         <Button>Manage</Button>
                                     </Link>
                                     <Link to={{

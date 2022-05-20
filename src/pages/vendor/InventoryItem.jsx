@@ -14,7 +14,7 @@ function InventoryItem(){
     const user = useContext(UserContext).user
 
     const fetchPart = ()=>{
-        getPart(params.partId, (response) =>{
+        getPart(user.token, params.partId, (response) =>{
             if (response.status === 200) {
                 setPart(response.data.part)
             }
@@ -40,7 +40,7 @@ function InventoryItem(){
     const handleConfirmDelete = () => {
         deletePart(user.token, part.id, (response) => {
             if (response.status === 200){
-                navigate(`/vendor/shops/${params.shopId}/manage/inventory`)
+                navigate(`/vendor/shops/${params.shopId}/manage/inventory`, {state: {removed: part.id}})
             }
         })
     }

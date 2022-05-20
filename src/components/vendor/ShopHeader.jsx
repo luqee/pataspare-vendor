@@ -1,8 +1,11 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import logo from '../../images/pataspare-logo.png'
 import AuthButton from "../AuthButton";
 
 function ShopHeader(){
+    const params = useParams()
+
     return (
         <Navbar collapseOnSelect expand="lg" style={{
             borderBottom: '5px solid #343a40',
@@ -22,9 +25,9 @@ function ShopHeader(){
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto flex-column flex-lg-row">
                     <Nav.Link href='/vendor'>Dashboard</Nav.Link>
-                    <Nav.Link href='parts'>Parts</Nav.Link>
-                    <Nav.Link href='orders'>Orders</Nav.Link>
-                    <Nav.Link href='inquiries'>Inquiries</Nav.Link>
+                    <Nav.Link href={`/vendor/shops/${params.shopId}/manage/inventory`}>Parts</Nav.Link>
+                    <Nav.Link href={`/vendor/shops/${params.shopId}/manage/orders`}>Orders</Nav.Link>
+                    <Nav.Link href={`/vendor/shops/${params.shopId}/manage/inquiries`}>Inquiries</Nav.Link>
                     </Nav>
                     <AuthButton />
                 </Navbar.Collapse>

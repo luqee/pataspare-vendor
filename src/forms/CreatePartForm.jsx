@@ -41,8 +41,8 @@ function CreatePartForm() {
             setDisabledModel(true)
             setDisabledYear(true)
         }else{
-            setDisabledModel(true)
-            setDisabledYear(true)
+            setDisabledModel(false)
+            setDisabledYear(false)
             brands.forEach((brand) => {
                 if (brand.id === selected.value){
                     setModels(brand.models)
@@ -84,7 +84,7 @@ function CreatePartForm() {
         postPart(user.token, formData, (response) =>{
             if (response.status === 201){
                 actions.setSubmitting(false);
-                navigate(`/vendor/shops/${params.shopId}/manage/inventory`)
+                navigate(`/vendor/shops/${params.shopId}/manage/inventory`, {state: {part: response.data.part}})
             }
         })
     }

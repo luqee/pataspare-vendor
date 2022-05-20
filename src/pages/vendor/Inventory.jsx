@@ -17,7 +17,7 @@ function Inventory() {
     }
     useEffect(()=>{
         fetchParts()
-    }, [parts])
+    }, [])
 
     return (
         <Container>

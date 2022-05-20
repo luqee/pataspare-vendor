@@ -1,6 +1,6 @@
 import {Modal, Button} from 'react-bootstrap'
 
-function DeleteShopModal(){
+function DeleteShopModal(props){
     return (
         <Modal
             {...props}

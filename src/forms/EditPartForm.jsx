@@ -12,8 +12,15 @@ function EditPartForm({part}){
     const params = useParams()
     const user = useContext(UserContext).user
     const [brands, setBrands] = useState([])
-    const [models, setModels] = useState([])
+    const [brandOptions, setBrandOptions] = useState([])
+    const [selectedBrand, setSelectedBrand] = useState([])
+    const [modelOptions, setModelOptions] = useState([])
+    const [selectedModels, setSelectedModels] = useState([])
     const [tags, setTags] = useState([])
+    const [tagOptions, setTagOptions] = useState([])
+    const [yearOptions, setYearOptions] = useState([])
+    const [selectedYears, setSelectedYears] = useState([])
+    const [selectedTags, setSelectedTags] = useState([])
     const [disabledModel, setDisabledModel] = useState(false)
     const [disabledYear, setDisabledYear] = useState(false)
 
@@ -21,6 +28,18 @@ function EditPartForm({part}){
         getBrands((response)=>{
             if (response.status === 200){
                 setBrands(response.data.brands)
+                let brandSelectOptions = response.data.brands.map((brand) => {
+                    return {
+                        value: brand.id,
+                        label: brand.name
+                    }
+                })
+                let anyOption = {
+                    value: 0,
+                    label: 'Any'
+                }
+                brandSelectOptions.unshift(anyOption)
+                setBrandOptions(brandSelectOptions)
             }
         })
     }
@@ -29,9 +48,69 @@ function EditPartForm({part}){
         getCategories((response)=>{
             if (response.status === 200){
                 setTags(response.data.categories)
+                let tagSelectOptions = response.data.categories.map((tag) => {
+                    return {
+                        value: tag.id,
+                        label: tag.name
+                    }
+                })
+                setTagOptions(tagSelectOptions)
             }
         })
     }
+
+    useEffect(()=>{
+        if(Object.keys(part).length > 0){
+            setSelectedBrand(brandOptions.find(brand => brand.value == part.brand_id))
+
+            const getSelectedModels = () => {
+                return Array.from(part.models, (model)=> {
+                    return {
+                        value: model.id,
+                        label: model.name
+                    }
+                })
+            }
+            let partModels = getSelectedModels()
+            setSelectedModels(partModels)
+
+            let partBrand = brands.find((brand) => brand.id == part.brand_id )
+            if(partBrand){
+                let modelSelectOptions = Array.from(partBrand.models, (model)=>{
+                    return {
+                        value: model.id,
+                        label: model.name
+                    }
+                })
+                setModelOptions(modelSelectOptions)
+            }
+            let partYears = Array.from(part.years, (year) => {
+                return {
+                    value: year.year,
+                    label: year.year
+                }
+            })
+            setSelectedYears(partYears)
+
+            let yearOptions = []
+            let today = new Date();
+            for(let year = parseInt(today.getFullYear()); year >= 1990; year--){
+                yearOptions.push({
+                    value: year,
+                    label: year
+                })
+            }
+            setYearOptions(yearOptions)
+
+            let partCategories = Array.from(part.categories, (category)=>{
+                return {
+                    value: category.id,
+                    label:category.name
+                }
+            })
+            setSelectedTags(partCategories)
+        }
+    }, [part])
 
     useEffect(()=>{
         fetchBrands()
@@ -43,11 +122,16 @@ function EditPartForm({part}){
             setDisabledModel(true)
             setDisabledYear(true)
         }else{
-            setDisabledModel(true)
-            setDisabledYear(true)
+            setDisabledModel(false)
+            setDisabledYear(false)
             let selectedBrand = brands.find((brand) => brand.id === selected.value)
             if(selectedBrand){
-                setModels(selectedBrand.models)
+                setModelOptions(Array.from(selectedBrand.models, (model) => {
+                    return {
+                        value: model.id,
+                        label:model.name
+                    }
+                }))
             }
         }
     }
@@ -58,15 +142,15 @@ function EditPartForm({part}){
         const filterFields = ['brand', 'tags', 'models', 'years', 'name']
         for (let value in values) {
             if (values.hasOwnProperty(value) && filterFields.indexOf([value]) === -1) {
-                if(values[value] != this.state.part[value]){
+                if(values[value] != part[value]){
                     formData.set([value], values[value])
                 }
             }
         }
-        if(values.name != this.state.part.title){
+        if(values.name != part.title){
             formData.set('title', values.name)
         }
-        if(values.brand.value != this.state.part.brand_id){
+        if(values.brand.value != part.brand_id){
             formData.set('brand_id', values.brand.value)
         }
         if(values.models != null){
@@ -91,77 +175,15 @@ function EditPartForm({part}){
                 navigate(`/vendor/shops/${params.shopId}/manage/inventory`)
             }else{
                 actions.setSubmitting(false);
-                console.log(error);
             }
         })
     }
-
-    let brandOptions = brands.map((brand) => {
-        return {
-            value: brand.id,
-            label: brand.name
-        }
-    })
-    let anyOption = {
-        value: 0,
-        label: 'Any'
-    }
-    brandOptions.unshift(anyOption)
-
-    let selectedBrand = brandOptions.find(brand => brand.value == part.brand_id) || anyOption
-    let modelOptions = models.map((model) => {
-        return {
-            value: model.id,
-            label: model.name
-        }
-    })
-    let selectedModels = null
-    if(part.models.length > 0){
-        selectedModels = Array.from(part.models, (model)=> {
-            return {
-                value: model.id,
-                label: model.name
-            }
-        })
-    }
-    let selectedYears = null
-    if(part.years.length > 0){
-        selectedYears = Array.from(part.years, (year) => {
-            return {
-                value: year.year,
-                label: year.year
-            }
-        })
-    }
-    let today = new Date();
-    let yearOptions = []
-    for(let year = parseInt(today.getFullYear()); year >= 1990; year--){
-        yearOptions.push({
-            value: year,
-            label: year
-        })
-    }
-    let tagOptions = tags.map((tag) => {
-        return {
-            value: tag.id,
-            label: tag.name
-        }
-    })
-    let selectedCategories = null
-    if(part.categories.length > 0){
-        selectedCategories = Array.from(part.categories, (category)=>{
-            return {
-                value: category.id,
-                label:category.name
-            }
-        })
-    }
-
+    
     let initialState = {
         brand: selectedBrand,
         models: selectedModels,
         years: selectedYears,
-        tags: selectedCategories,
+        tags: selectedTags,
         name: part.title,
         description: part.description,
         partImage: null,
@@ -174,17 +196,17 @@ function EditPartForm({part}){
             validationSchema={EditPartSchema}
             enableReinitialize={true}
             initialValues={initialState}
-            onSubmit={editPart}
-            render={({
-                values,
-                setFieldValue,
-                errors,
-                dirty,
-                isSubmitting,
-                handleChange,
-                handleSubmit,
-            }) => {
-                return <Form onSubmit={handleSubmit}>
+            onSubmit={editPart}>{
+                ({
+                    values,
+                    setFieldValue,
+                    errors,
+                    dirty,
+                    isSubmitting,
+                    handleChange,
+                    handleSubmit,
+                }) => (
+                    <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="name">
                     <Form.Label>Name:</Form.Label>
                     <Form.Control placeholder="Title" value={values.name} onChange={handleChange}/>
@@ -340,9 +362,10 @@ function EditPartForm({part}){
                     <Button variant="primary" type="submit" disabled={isSubmitting || errors.length > 0 || !dirty}>
                     {isSubmitting ? 'Submitting': 'EDIT'}
                     </Button>
-                </Form>
-            }}
-        />
+                    </Form>
+                )
+            }
+        </Formik>
     )
 }
 

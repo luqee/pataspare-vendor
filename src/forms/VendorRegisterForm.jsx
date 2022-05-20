@@ -2,11 +2,12 @@ import {useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Formik, ErrorMessage } from 'formik';
 import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/dist/style.css'
+import 'react-phone-input-2/lib/style.css'
 import VendorSignupSchema from './schemas/VendorSignupSchema';
 import DivWithErrorHandling from '../components/withErrorHandlingHoc';
 import { postRegister } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
+import formStyles from '../styles/Form.module.scss';
 
 function VendorRegisterForm(){
 	let [showError, setShowError] = useState(false)
@@ -22,7 +23,7 @@ function VendorRegisterForm(){
 	const navigate = useNavigate()
 
 	const onSubmitForm = (values, actions) => {
-        let postData = { ...values ,role: `dealer`}
+        let postData = { ...values ,role: `vendor`}
         postRegister(postData, (response)=>{
             if (response.status === 201) {
                 actions.setSubmitting(false);
@@ -68,7 +69,7 @@ function VendorRegisterForm(){
 					<Form.Label>Phone Number</Form.Label>
 					<PhoneInput style={{
 						width: '100%'
-					}} defaultCountry={'ke'} value={values.number} onChange={(value) => {
+					}} country={'ke'} value={values.number} onChange={(value) => {
 						setFieldValue('number', value)
 					}} />
 					<ErrorMessage name="number" render={(msg) => {

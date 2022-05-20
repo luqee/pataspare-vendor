@@ -54,7 +54,7 @@ export const logout = (user, cb) => {
 		}
 	})
 	.then((response) => {
-		if (response.status === 201) {
+		if (response.status === 200) {
             cb(response.data)
         }
 	})

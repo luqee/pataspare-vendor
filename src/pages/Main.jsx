@@ -47,12 +47,6 @@ function Main(){
                 <Route path="inventory" element={<Inventory />} />
                 <Route path="orders" element={<Orders />} />
                 <Route path="inquiries" element={<Inquiries />} />
-                {/* <Route path="account" element={<Account />} />
-                <Route path="orders/create" element={<OrderCreate />} />
-                <Route path="orders" element={<Orders />} />
-                <Route path="orders/:orderId" element={<ViewOrder />} />
-                <Route path="inquiries" element={<Inquiries />} />
-                <Route path="inquiries/:inquiryId" element={<ViewInquiry />} /> */}
             </Route>
             <Route path="/vendor/shops/:shopId/manage" element={
                 <RequireAuth>

@@ -17,7 +17,7 @@ export const getShops = (token, cb)=>{
 }
 
 export const getShop = (token, shopId, cb)=>{
-    autoAPI.get(`/vendor/shops${shopId}`,{
+    autoAPI.get(`/vendor/shops/${shopId}`,{
         headers: {
             'Authorization': 'Bearer '+ token
         }
@@ -83,7 +83,7 @@ export const postUpdateShops = (token, shopId, payload, cb)=>{
 }
 
 export const deleteShops = (token, shopId, cb)=>{
-    autoAPI.delete(`/vendor/shops${shopId}`, {
+    autoAPI.delete(`/vendor/shops/${shopId}`, {
         headers: {
             'Authorization': 'Bearer '+ token
         }
@@ -156,7 +156,7 @@ export const postUpdatePart = (token, partId, payload, cb)=>{
     });
 }
 
-export const getPart = (partId, cb)=>{
+export const getPart = (token, partId, cb)=>{
     autoAPI.get(`/vendor/parts/${partId}`, {
         headers: {
             'Authorization': 'Bearer '+ token
@@ -311,21 +311,3 @@ export const getInquiry = (token, inquiryId, cb) => {
 		console.log(error);
 	})
 }
-
-
-
-
-export const getOrder = (orderId, user, cb) => {
-	autoApi.get(`/orders/${orderId}`, {
-		headers: {'Authorization': 'Bearer '+ user.token}
-	})
-	.then((response) => cb(response.data))
-	.catch((error) => {
-		console.log('Error getting order');
-		console.log(error);
-	})
-}
-
-
-
-

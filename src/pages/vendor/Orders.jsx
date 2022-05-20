@@ -21,7 +21,7 @@ function Orders(){
     }
     useEffect(()=>{
         fetchOrders()
-    }, [orderItems])
+    }, [])
 
     return (
         <Container>

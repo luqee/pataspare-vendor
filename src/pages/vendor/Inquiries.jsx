@@ -1,9 +1,7 @@
-import React, {Component, useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import {Container, Row, Col, Table, Button} from 'react-bootstrap';
-import autoAPI, { getInquiries } from '../../api/api';
-import urls from '../../config/config';
-import Loader from '../Loader';
-import {Link} from 'react-router-dom';
+import { getInquiries } from '../../api/api';
+import Loader from '../../components/Loader';
 import { UserContext } from '../../App';
 import InquiriesTable from '../../components/vendor/InquiriesTable';
 
@@ -23,26 +21,24 @@ function Inquiries(){
 
     useEffect(()=>{
         fetchInquiries()
-    }, [inquiries])
+    }, [])
 
-    render = () => {
-        return <Container>
-            <Row>
-                <Col>
-                <p>Inquiries in my shops</p>
-                </Col>
-            </Row>
-            <Row style={{
-                minHeight: `50px`,
-                justifyContent: 'center'
-            }}>
-                <Col lg={12}>
-                <Loader loading={loading} />
-                <InquiriesTable inquiries={inquiries} />
-                </Col>
-            </Row>
-        </Container>
-    };
-}
+    return <Container>
+        <Row>
+            <Col>
+            <p>Inquiries in my shops</p>
+            </Col>
+        </Row>
+        <Row style={{
+            minHeight: `50px`,
+            justifyContent: 'center'
+        }}>
+            <Col lg={12}>
+            <Loader loading={loading} />
+            <InquiriesTable inquiries={inquiries} />
+            </Col>
+        </Row>
+    </Container>
+};
 
 export default Inquiries;

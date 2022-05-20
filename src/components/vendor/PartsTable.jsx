@@ -16,7 +16,7 @@ function PartsTable({parts}){
             </thead>
             <tbody>
             {
-                parts.length > 0 ? parts.map((part, indx) => {
+                (parts && parts.length > 0) ? parts.map((part, indx) => {
                     return <tr key={indx}>
                         <td><Image width='100' height='100' src={`${urls.hostRoot}/${part.part_image}`} rounded /></td>
                         <td>{part.title}</td>
@@ -24,7 +24,7 @@ function PartsTable({parts}){
                         <td>{part.stock}</td>
                         <td>
                             <Link to={{
-                                pathname: navigate(`/vendor/shops/${part.shop.id}/manage/inventory/${part.id}`),
+                                pathname: `/vendor/shops/${part.shop.id}/manage/inventory/${part.id}`,
                                 state: {part: part}
                             }}>
                             <Button>View</Button>
@@ -32,7 +32,7 @@ function PartsTable({parts}){
                         </td>
                     </tr>
                     })
-                    : <p>No Inventory</p>
+                    : <tr><td rowSpan={5}>No Inventory</td></tr>
             }
             </tbody>
         </Table>

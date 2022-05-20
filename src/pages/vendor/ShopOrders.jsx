@@ -1,14 +1,15 @@
 import {Container, Row, Col} from 'react-bootstrap';
 import { getShopOrders } from '../../api/api';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
-import { useParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import OrderItemsTable from '../../components/vendor/OrderItemsTable';
 
 function ShopOrders(){
+    const shop = useOutletContext().shop
     const [orderItems, setOrderItems] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const user = useContext(UserContext).user
     const params = useParams()
 
@@ -22,8 +23,12 @@ function ShopOrders(){
         })
     }
     useEffect(()=>{
-        fetchOrders()
-    }, [orderItems])
+        if (Object.keys(shop).length > 0) {
+            setOrderItems(shop.order_items)
+        }else{
+            fetchOrders()
+        }
+    }, [])
 
     return (
         <Container>

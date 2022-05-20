@@ -1,6 +1,6 @@
 import {Form, Button, Image} from 'react-bootstrap';
 import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/dist/style.css'
+import 'react-phone-input-2/lib/style.css'
 import { postShops } from '../api/api';
 import { Formik, ErrorMessage } from 'formik';
 import { useContext, useEffect, useState } from 'react';
@@ -14,29 +14,26 @@ function CreateShopForm() {
     const [description, setDescription] = useState('')
     const [shopImage, setShopImage] = useState(null)
     const [location, setLocation] = useState('')
-    const [map, setMap] = useState('')
-    const [marker, setMarker] = useState('')
-    const [autoComplete, setAutoComplete] = useState('')
     const user = useContext(UserContext).user
 
     const placeChanged = () => {
-        let place = autoComplete.getPlace();
+        let place = window.autocomplete.getPlace();
         let pos = {
             lat: place.geometry.location.lat(),
             lng: place.geometry.location.lng()
         }
         setLocation(place.name)
-        map.setCenter(pos)
-        map.setZoom(15)
-        if(marker === ''){
+        window.mapobject.setCenter(pos)
+        window.mapobject.setZoom(15)
+        if(!window.marker){
             let defaultMarker = new window.google.maps.Marker({
                 position: pos,
-                map: map,
+                map: window.mapobject,
                 draggable: true
             })
-            setMarker(defaultMarker)
+            window.marker = defaultMarker
         }else{
-            marker.setPosition(pos)
+            window.marker.setPosition(pos)
         }
         
     }
@@ -48,20 +45,19 @@ function CreateShopForm() {
         let autocomplete = new window.google.maps.places.Autocomplete(locationInput, options);
         autocomplete.setFields(['name', 'geometry.location']);
         autocomplete.addListener('place_changed', placeChanged);
-        setAutoComplete(autocomplete)
+        window.autocomplete = autocomplete
         let mapInput = new window.google.maps.Map(document.getElementById('map'), {
             center: {lat: -1.308, lng: 36.825},
             zoom:10
         });
-        
-        setMap(mapInput)
+        window.mapobject = mapInput
     }
 
     const setupMap = () => {
         if (!window.google) {
             var s = document.createElement('script');
             s.type = 'text/javascript';
-            s.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&libraries=places&callback=initMap`;
+            s.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_KEY}&libraries=places`;
             var x = document.getElementsByTagName('script')[0];
             x.parentNode.insertBefore(s, x);
             s.addEventListener('load', e => {
@@ -83,8 +79,8 @@ function CreateShopForm() {
             number: values.number,
             description: values.description,
             location: location,
-            latitude: marker.getPosition().lat(),
-            longitude: marker.getPosition().lng()
+            latitude: window.marker.getPosition().lat(),
+            longitude: window.marker.getPosition().lng()
         }
         let formData = new FormData();
         for (let name in shopData){
@@ -95,10 +91,9 @@ function CreateShopForm() {
         postShops(user.token, formData, (response) =>{
             if (response.status === 201){
                 actions.setSubmitting(false);
-                navigate('/vendor/shpos')
+                navigate('/vendor/shops')
             }else{
                 actions.setSubmitting(false);
-                console.log(error);
             }
         })
     }
@@ -138,7 +133,7 @@ function CreateShopForm() {
                     <Form.Label>Business Number:</Form.Label>
                     <PhoneInput style={{
                         width: '100%'
-                    }} defaultCountry={'ke'} value={values.number} onChange={(value) => {
+                    }} country={'ke'} value={values.number} onChange={(value) => {
                         setFieldValue('number', value)
                     }} />
                     <ErrorMessage name="number" render={(msg) => {

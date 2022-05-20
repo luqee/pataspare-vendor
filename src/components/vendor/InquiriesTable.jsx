@@ -15,7 +15,7 @@ function InquiriesTable({inquiries}){
             </thead>
             <tbody>
             {
-                inquiries.length > 0 ?
+                (inquiries && inquiries.length > 0) ?
                 inquiries.map((inquiry, indx) => {
                     let num_of_replies = 0
                     if(inquiry.replies && inquiry.replies.length > 0){

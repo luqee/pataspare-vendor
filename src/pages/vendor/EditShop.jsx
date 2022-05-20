@@ -1,11 +1,11 @@
 import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/dist/style.css'
+import 'react-phone-input-2/lib/style.css'
 import { deleteShops, postUpdateShops } from '../../api/api';
 import {urls} from '../../config/config';
 import { Formik, ErrorMessage } from 'formik';
 import EditShopSchema from '../../forms/schemas/EditShopSchema'
 import {Container,Row, Col, Form, Button, Image} from 'react-bootstrap';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App';
 import DeleteShopModal from '../../components/vendor/DeleteShopModal';
@@ -131,7 +131,6 @@ function EditShop(){
                 navigate('/vendor/shops')
             }else{
                 actions.setSubmitting(false);
-                console.log(error);
             }
         })
     }

@@ -18,7 +18,7 @@ function OrderItemsTable({orderItems}){
             </thead>
             <tbody>
             {
-                orderItems.length > 0 ?
+                (orderItems && orderItems.length > 0) ?
                 orderItems.map((order) => {
                     return <OrderItemRow key={order.id} item={order} />
                     })

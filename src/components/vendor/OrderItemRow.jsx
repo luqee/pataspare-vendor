@@ -5,7 +5,8 @@ import Select from 'react-select';
 import { putOrder } from '../../api/api';
 import { UserContext } from '../../App';
 
-function OrderItemRow({item}){
+function OrderItemRow(props){
+    const [item, setItem] = useState(props.item)
     let [status, setStatus] = useState({
         value: item.status,
         label: item.status,

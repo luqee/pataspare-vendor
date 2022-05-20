@@ -1,5 +1,4 @@
 import axios from 'axios';
-import urls from './config';
 import { useMediaQuery } from 'react-responsive'
 
 export const urls = {

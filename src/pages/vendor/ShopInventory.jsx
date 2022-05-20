@@ -1,37 +1,48 @@
-import {Link, useLocation, useParams} from 'react-router-dom';
+import {Link, useLocation, useOutletContext, useParams} from 'react-router-dom';
 import {Container, Row, Col, Button} from 'react-bootstrap';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
 import PartsTable from '../../components/vendor/PartsTable';
-import { getShopParts } from '../../api/api';
+import { getShop, getShopParts } from '../../api/api';
 
 function ShopInventory(){
-    const location = useLocation()
-    const user = useContext(UserContext).user
+    const [shop, setShop] = useState(useOutletContext().shop)
     const [parts, setParts] = useState([])
+    const user = useContext(UserContext).user
     const params = useParams()
+    const location = useLocation()
 
-    const fetchShopParts = () => {
-        getShopParts(user.token, params.shopId, (response)=>{
-            if (response.status === 200){
-                setParts(response.data.parts)
-            }
+    const fetchShop = () => {
+        getShop(user.token, params.shopId, (response) => {
+            setShop(response.data.shop)
+            setParts(response.data.shop.parts)
         })
     }
-    
-    useEffect(()=>{
-        if (!location.state) {
-            fetchShopParts()
+    const setup = () => {
+        if (Object.keys(shop).length > 0) {
+            if (location.state) {
+                shop.parts.push(location.state.part)
+            }
+            if(location.state && location.state.removed){
+                let removedPart = shop.parts.find((part) => part.id == location.state.removed)
+                if(removedPart){
+                    shop.parts.splice(shop.parts.indexOf(removedPart), 1)
+                }
+            }
+            setParts(shop.parts.filter(Boolean))
         }else{
-            setParts(location.state.shop.parts)
+            fetchShop()
         }
-    }, [])
+    }
 
-    let shop = parts[0].shop
     let shopName = ''
-    if(shop !== undefined){
+    if(Object.keys(shop).length > 0){
         shopName = shop.name[0].toUpperCase() + shop.name.slice(1)
     }
+
+    useEffect(()=>{
+        setup()
+    },[])
     return (
         <Container>
             <Row>
@@ -39,10 +50,7 @@ function ShopInventory(){
                 <p>{`${shopName}'s Inventory`}</p>
                 <Link style={{
                     float:"right"
-                }} to={{
-                    pathname: `create`,
-                    state: {shop: shop}
-                }}>
+                }} to={`create`}>
                     <Button>ADD PART</Button>
                 </Link>
                 </Col>
