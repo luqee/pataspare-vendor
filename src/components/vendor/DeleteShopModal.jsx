@@ -17,7 +17,7 @@ function DeleteShopModal(props){
             <h4>Centered Modal</h4>
             <p>
                 Are you sure you want to delete this shop?
-                It will be deleted along with ({props.shop.parts.length}) parts.
+                It will be deleted along with ({props.shop.parts?.length}) parts.
             </p>
             </Modal.Body>
             <Modal.Footer>

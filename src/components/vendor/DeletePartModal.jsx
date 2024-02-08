@@ -17,7 +17,7 @@ function DeletePartModal(props){
             <h4>Deleting Part</h4>
             <p>
                 Are you sure you want to delete this item? <br /> 
-                Part Name: ({props.part.title})
+                Part Name: {props.part.title}
             </p>
             </Modal.Body>
             <Modal.Footer>

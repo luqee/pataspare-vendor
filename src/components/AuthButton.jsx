@@ -1,14 +1,10 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext } from "react";
 import { Nav, NavDropdown } from "react-bootstrap";
-import { UserContext } from "../App";
 
 function AuthButton() {
-    const userContext = useContext(UserContext)
-    let currentUser = userContext.user
-
-    return currentUser.id ? (
+    const token = ''
+    return token ? (
         <Nav>
             <NavDropdown title={<FontAwesomeIcon icon={faUser} />} id="basic-nav-dropdown">
             <NavDropdown.Item href={`/vendor/account`}>My Account</NavDropdown.Item>
@@ -19,7 +15,7 @@ function AuthButton() {
                     {/* <Nav.Link eventKey='logout'>Log Out</Nav.Link> */}
                     <a href="/#" onClick={(e) => {
                         e.preventDefault();
-                        userContext.logoutUser()
+                        // userContext.logoutUser()
                     }} style={{
                         color: '#212529',
                         display: `block`,

@@ -1,6 +1,8 @@
+'use client'
 import { Container, Nav, Navbar } from "react-bootstrap";
-import logo from '../../images/pataspare-logo.png'
+import logo from '@/images/pataspare-logo.png'
 import AuthButton from "../AuthButton";
+import Image from "next/image";
 
 function VendorHeader(){
     return (
@@ -10,7 +12,7 @@ function VendorHeader(){
         }}>
             <Container>
                 <Navbar.Brand href="/">
-                <img
+                <Image
                     src={logo}
                     width="100"
                     height="40"

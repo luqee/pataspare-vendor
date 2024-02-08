@@ -2,57 +2,38 @@
   "name": "pataspare-vendor",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.1.1",
-    "@fortawesome/free-brands-svg-icons": "^6.1.1",
-    "@fortawesome/free-solid-svg-icons": "^6.1.1",
-    "@fortawesome/react-fontawesome": "^0.1.18",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.27.2",
-    "bootstrap": "^5.1.3",
-    "formik": "^2.2.9",
-    "node-sass": "^7.0.1",
-    "query-string": "^7.1.1",
-    "react": "^18.1.0",
-    "react-bootstrap": "^2.3.1",
-    "react-dom": "^18.1.0",
-    "react-ga": "^3.3.0",
-    "react-helmet": "^6.1.0",
-    "react-phone-input-2": "^2.15.0",
-    "react-rating": "^2.0.5",
-    "react-responsive": "^9.0.0-beta.6",
-    "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
-    "react-select": "^5.3.1",
-    "react-spinners": "^0.11.0",
-    "viewerjs": "^1.10.5",
-    "web-vitals": "^2.1.4",
-    "yup": "^0.32.11"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "axios": "^1.6.5",
+    "bootstrap": "^5.3.2",
+    "formik": "^2.4.5",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-bootstrap": "^2.10.0",
+    "react-dom": "^18",
+    "react-ga": "^3.3.1",
+    "react-phone-input-2": "^2.15.1",
+    "react-rating": "^2.0.5",
+    "react-select": "^5.8.0",
+    "react-spinners": "^0.13.8",
+    "viewerjs": "^1.11.6",
+    "yup": "^1.3.3"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "typescript": "^5"
   }
 }

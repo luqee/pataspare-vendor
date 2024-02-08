@@ -1,9 +1,8 @@
-import {useState, useContext} from 'react';
+import {useState} from 'react';
 import {Image, Button} from 'react-bootstrap';
-import {urls} from '../../config/config';
 import Select from 'react-select';
-import { putOrder } from '../../api/api';
-import { UserContext } from '../../App';
+import {putOrder} from '@/utils/api'
+import {urls} from '@/config/urls'
 
 function OrderItemRow(props){
     const [item, setItem] = useState(props.item)
@@ -21,7 +20,6 @@ function OrderItemRow(props){
         }
     })
 
-    const user = useContext(UserContext).user
     const handleStatus = (selected) => {
         if(selected.value !== item.status){
             setStatusChanged(true)
@@ -30,22 +28,26 @@ function OrderItemRow(props){
         }
         setStatus(selected);
     }
+
     const changeStatus = () => {
         setUpdating(true)
         let postData = {
             status: status.value
         }
-
-        putOrder(user.token, item.id, postData, (response) =>{
+        putOrder(item.id, postData)
+        .then((response) => {
+            setUpdating(false)
             if (response.status === 201){
-                setUpdating(false)
                 setItem(response.data.data.order_item)
                 setStatusChanged(false)
             }
         })
+        .catch((error) => {
+            console.log(error)
+        })
     }
     return <tr>
-            <td><Image width={'60px'} height={'60px'} src={`${urls.hostRoot}/${item.part.part_image}`} /> </td>
+            <td><Image width={'60px'} height={'60px'} src={`${urls.apiHost}/${item.part.part_image}`} /> </td>
             <td>{item.part.title}</td>
             <td>{item.shop.name}</td>
             <td>{item.price}</td>

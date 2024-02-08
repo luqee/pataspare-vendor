@@ -1,16 +1,13 @@
 import { ErrorMessage, Formik } from "formik"
-import { useContext, useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 import Select from 'react-select';
-import { getBrands, getCategories, postUpdatePart } from "../api/api"
-import { UserContext } from "../App"
 import EditPartSchema from "./schemas/EditPartSchema"
-import {urls} from '../config/config'
+import {urls} from '@/config/urls'
 import { Button, Form, Image } from "react-bootstrap";
+import {getBrands, getCategories, putPart} from '@/utils/api'
+import { useRouter } from "next/navigation";
 
 function EditPartForm({part}){
-    const params = useParams()
-    const user = useContext(UserContext).user
     const [brands, setBrands] = useState([])
     const [brandOptions, setBrandOptions] = useState([])
     const [selectedBrand, setSelectedBrand] = useState([])
@@ -25,10 +22,11 @@ function EditPartForm({part}){
     const [disabledYear, setDisabledYear] = useState(false)
 
     const fetchBrands = () => {
-        getBrands((response)=>{
+        getBrands()
+        .then((response)=>{
             if (response.status === 200){
-                setBrands(response.data.brands)
-                let brandSelectOptions = response.data.brands.map((brand) => {
+                setBrands(response.data.data.brands)
+                let brandSelectOptions = response.data.data.brands.map((brand) => {
                     return {
                         value: brand.id,
                         label: brand.name
@@ -45,7 +43,8 @@ function EditPartForm({part}){
     }
 
     const fetchCategories = () => {
-        getCategories((response)=>{
+        getCategories()
+        .then((response) => {
             if (response.status === 200){
                 setTags(response.data.categories)
                 let tagSelectOptions = response.data.categories.map((tag) => {
@@ -56,6 +55,7 @@ function EditPartForm({part}){
                 })
                 setTagOptions(tagSelectOptions)
             }
+
         })
     }
 
@@ -136,7 +136,7 @@ function EditPartForm({part}){
         }
     }
 
-    const navigate = useNavigate()
+    const router = useRouter()
     const editPart = (values, actions) => {
         let formData = new FormData();
         const filterFields = ['brand', 'tags', 'models', 'years', 'name']
@@ -169,13 +169,15 @@ function EditPartForm({part}){
             formData.set('part_image', values.partImage)
         }
 
-        postUpdatePart(user.token, params.partId, formData, (response) => {
-            if (response.status === 201){
-                actions.setSubmitting(false);
-                navigate(`/vendor/shops/${params.shopId}/manage/inventory`)
-            }else{
-                actions.setSubmitting(false);
+        putPart(part.id, formData)
+        .then((response) => {
+            actions.setSubmitting(false);
+            if (response.status === 201) {
+                router.push(`/vendor/shops/${params.shopId}/manage/inventory`)
             }
+        })
+        .catch((error) => {
+            console.log(error);
         })
     }
     
@@ -328,9 +330,9 @@ function EditPartForm({part}){
                         setFieldValue("partImage", event.currentTarget.files[0]);
 
                     }}/>
-                    <a target="_blank" href={`${urls.hostRoot}/${part.part_image}`} rel="noopener noreferrer">
+                    <a target="_blank" href={`${urls.apiHost}/${part.part_image}`} rel="noopener noreferrer">
                     <Image
-                        id={`thumb`} width="200px" height="200px" src={`${urls.hostRoot}/${part.part_image}`}/>
+                        id={`thumb`} width="200px" height="200px" src={`${urls.apiHost}/${part.part_image}`}/>
                     </a>
                     <ErrorMessage name="partImage" render={(msg) => {
                         return <Form.Control.Feedback type="invalid" style={{

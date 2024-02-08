@@ -1,5 +1,5 @@
+import Link from 'next/link';
 import {Table, Button} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
 
 function InquiriesTable({inquiries}){
     return (
@@ -28,10 +28,7 @@ function InquiriesTable({inquiries}){
                         <td>{num_of_replies}</td>
                         <td>
                         navigate()
-                        <Link to={{
-                            pathname: `/vendor/shops/${inquiry.shop.id}/manage/inquiries/${inquiry.id}`,
-                            state: {inquiry: inquiry }
-                        }}>
+                        <Link href={`/vendor/shops/${inquiry.shop.id}/manage/inquiries/${inquiry.id}`}>
                         <Button>View</Button>
                         </Link>
                             

@@ -1,16 +1,4 @@
-import axios from 'axios';
 import { useMediaQuery } from 'react-responsive'
-
-export const urls = {
-  hostRoot: `${process.env.REACT_APP_BACKEND_URL}`,
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api/v1`,
-}
-
-export const autoAPI = axios.create({
-  baseURL: urls.baseURL,
-  withCredentials: true,
-  headers: {'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest'}
-});
 
 const Desktop = ({ children }) => {
   const isDesktop = useMediaQuery({ minWidth: 992 })

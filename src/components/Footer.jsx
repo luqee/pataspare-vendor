@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
-import {Link} from 'react-router-dom';
 import { Row, Col} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTwitter, faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faTwitterSquare, faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import Link from 'next/link';
 
 function Footer(){
     return (
@@ -13,7 +13,7 @@ function Footer(){
                     <div>SOCIAL</div>
                     <div className="fb-like" data-href="https://web.facebook.com/PataSpare-106357314168691" data-colorscheme="dark" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
                     {/* <FontAwesomeIcon icon={faFacebook} /><br/> */}
-                    <FontAwesomeIcon icon={faTwitter} /><br/>
+                    <FontAwesomeIcon icon={faTwitterSquare} size='sm'/><br/>
                     <FontAwesomeIcon icon={faYoutube} /><br/>
                     <FontAwesomeIcon icon={faInstagram} /><br/>
                 </Fragment>
@@ -24,13 +24,13 @@ function Footer(){
                 <Link style={{
                     color: '#ffffff',
                     textDecoration: 'none'
-                }} to={`/privacy`}>
+                }} href={`/privacy`}>
                     Privacy Policy
                 </Link><br/>
                 <Link style={{
                     color: '#ffffff',
                     textDecoration: 'none'
-                }} to={`/terms`}>
+                }} href={`/terms`}>
                     Terms &amp; Conditions
                 </Link>
             </Col>
