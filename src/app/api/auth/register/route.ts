@@ -16,12 +16,8 @@ export async function POST(req: Request, res: Response) {
     return Response.json(response.data, {
       status: response.status,
     })
-    // redirect('/admin')
-  } else {
-    // No response received
-    console.log('No response received');
-    return Response.json({ error: 'Error Processing request' }, {
-      status: 400,
-    });
   }
+  return Response.json({ error: 'Error Processing request' }, {
+    status: 400,
+  });
 }

@@ -1,24 +1,25 @@
 'use client'
 import { useState } from "react"
 import { Container, Card, Button } from "react-bootstrap"
-import { useRouter } from "next/navigation"
-import { resendEmail } from "@/utils/api"
+import { useRouter, useSearchParams } from "next/navigation"
+import { getEmailResend } from "@/utils/api"
 
 function EmailSent() {
   const [isLoading, setLoading] = useState(false)
   const router = useRouter()
-  const email = router.query.email
+  const searchParams = useSearchParams()
 
   const handleClick = () => {
     setLoading(true)
-    resendEmail(email)
+    getEmailResend(searchParams.toString())
     .then((response) => {
       setLoading(false)
       if (response.status === 200) {
-        router.push(`/auth/email?email=${email}`)
+        router.refresh()
       }
     })
     .catch((error) => {
+      setLoading(false)
       console.log(error);
     })
   }

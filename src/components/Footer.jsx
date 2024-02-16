@@ -9,14 +9,12 @@ function Footer(){
         <Row>
 
             <Col xs={12} md={4}>
-                <Fragment>
-                    <div>SOCIAL</div>
-                    <div className="fb-like" data-href="https://web.facebook.com/PataSpare-106357314168691" data-colorscheme="dark" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
-                    {/* <FontAwesomeIcon icon={faFacebook} /><br/> */}
-                    <FontAwesomeIcon icon={faTwitterSquare} size='sm'/><br/>
-                    <FontAwesomeIcon icon={faYoutube} /><br/>
-                    <FontAwesomeIcon icon={faInstagram} /><br/>
-                </Fragment>
+                <div>SOCIAL</div>
+                <div className="fb-like" data-href="https://web.facebook.com/PataSpare-106357314168691" data-colorscheme="dark" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
+                {/* <FontAwesomeIcon icon={faFacebook} /><br/> */}
+                <FontAwesomeIcon icon={faTwitterSquare} size='sm'/><br/>
+                <FontAwesomeIcon icon={faYoutube} /><br/>
+                <FontAwesomeIcon icon={faInstagram} /><br/>
             </Col>
 
             <Col xs={12} md={4}>

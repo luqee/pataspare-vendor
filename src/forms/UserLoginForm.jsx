@@ -4,10 +4,11 @@ import { Formik, ErrorMessage } from 'formik';
 import DivWithErrorHandling from '@/components/withErrorHandlingHoc';
 import LoginSchema from './schemas/LoginSchema';
 import formStyles from '@/styles/Form.module.css';
-import { postLogin } from '@/utils/api';
 import { useRouter } from 'next/navigation';
+import { useAuthContext } from '@/context/AuthContext';
 
 function UserLoginForm(){
+	const {login, updateUser} = useAuthContext()
 	let [showError, setShowError] = useState(false)
 	let [formErrors, setFormErrors] = useState({})
 	let [formState, setformState] = useState({
@@ -17,32 +18,25 @@ function UserLoginForm(){
 	const router = useRouter()
 
 	const loginUser = (values, actions) => {
-		// event.preventDefault();
 		setformState(values)
 		let postData = {...values};
-		postLogin(postData)
-		.then((response) => {
-			actions.setSubmitting(false);
+		login(postData, (response)=>{
+			actions.setSubmitting(false)
 			if (response.status === 200) {
-				// let responseData = response.data.data;
-				// let user = responseData.user
-				// user['token'] = responseData.token
-				// userContext.updateUser(user)
+				updateUser()
 				router.replace(`/vendor`)
-			}
-			let errors = []
-			if(response.status === 422 || response.status === 403){
-				errors[0] = response.data.message
 			}else{
-				errors[0] = response.message
+				let errors = []
+				if(response.status === 422 || response.status === 403){
+					errors[0] = response.data.message
+				}else{
+					errors[0] = response.message
+				}
+				if(errors){
+					setFormErrors(errors)
+					setShowError(true)
+				}
 			}
-			if(errors){
-				setFormErrors(errors)
-				setShowError(true)
-			}
-		})
-		.catch((error) => {
-			console.log(error);
 		})
 	}
 

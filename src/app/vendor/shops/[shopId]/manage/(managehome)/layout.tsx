@@ -1,8 +1,10 @@
 import { Container } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
+import './globals.css'
 import Footer from "@/components/Footer";
 import ShopHeader from "@/components/vendor/ShopHeader";
 import type { Metadata, Viewport } from 'next'
+import { AuthProvider } from "@/context/AuthContext";
 
 export const viewport: Viewport = {
   themeColor: '#000000',
@@ -31,30 +33,32 @@ function ShopManager({
     return (
       <html lang="en">
       <body>
-        <Container fluid className="App" style={{
-            padding: '0',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column'
-        }}>
-            
-            <Container id={`Header`} fluid  style={{
-                padding: '0',
-                position: 'fixed',
-                top: '0',
-                zIndex: '20',
-            }}>
-              <ShopHeader />
-            </Container>
-            <Container style={{
-              marginTop: `${100}px`,
-              paddingBottom: '10px,',
-              paddingTop: '10px',
-              flex: '1'
-            }} >
-              {children}
-            </Container>
-        </Container>
+        <AuthProvider>
+          <Container fluid className="App" style={{
+              padding: '0',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column'
+          }}>
+              
+              <Container id={`Header`} fluid  style={{
+                  padding: '0',
+                  position: 'fixed',
+                  top: '0',
+                  zIndex: '20',
+              }}>
+                <ShopHeader />
+              </Container>
+              <Container style={{
+                marginTop: `${100}px`,
+                paddingBottom: '10px,',
+                paddingTop: '10px',
+                flex: '1'
+              }} >
+                {children}
+              </Container>
+          </Container>
+        </AuthProvider>
       </body>
     </html>
     )

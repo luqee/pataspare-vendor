@@ -4,16 +4,32 @@ export const postRegister = (postData) => {
 	return appAPI.post(`/api/auth/register`, JSON.stringify(postData))
 }
 
-export const resendEmail = (email) => {
-	return appAPI.get(`/api/auth/email/resend?email=${email}`)
+export const getEmailResend = (query)=>{
+    return appAPI.get(`/api/auth/email?${query}`)
 }
 
-export const getVerifyMail = (query) => {
-	return appAPI.get(query)
+export const getVerify = (query)=>{
+    return appAPI.get(`/api/auth/verify?${query}`)
 }
 
-export const postLogin = (postData) => {
-	return appAPI.post(`/api/auth/login`, JSON.stringify(postData))
+export const postRequestReset = (requestData)=>{
+    return appAPI.post(`/api/auth/email`, JSON.stringify(requestData))
+}
+
+export const postPasswordReset = (requestData)=>{
+    return appAPI.post(`/api/auth/reset`, JSON.stringify(requestData))
+}
+
+export const postLogin = (requestData)=>{
+    return appAPI.post(`/api/auth/login`, JSON.stringify(requestData))
+}
+
+export const postLogout = (requestData)=>{
+    return appAPI.post(`/api/auth/logout`, JSON.stringify(requestData))
+}
+
+export const postSocialLogin = (requestData)=>{
+    return appAPI.post(`/api/auth/social`, JSON.stringify(requestData))
 }
 
 export const getShops = ()=>{

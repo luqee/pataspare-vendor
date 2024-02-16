@@ -23,6 +23,7 @@ function VendorRegisterForm(){
 	const router = useRouter()
 
 	const onSubmitForm = (values, actions) => {
+		setformState(values)
         let postData = { ...values ,role: `vendor`}
 		postRegister(postData)
 		.then((response)=>{
@@ -32,6 +33,9 @@ function VendorRegisterForm(){
 			}
 			setShowError(true)
 			setFormErrors(response.errors)
+		})
+		.catch((error)=>{
+			console.log(error);
 		})
     }
 

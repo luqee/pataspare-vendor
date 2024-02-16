@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 // import { Inter } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.css';
+import './globals.css'
 import { Container } from "react-bootstrap";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { AuthProvider } from '@/context/AuthContext';
 
 export const viewport: Viewport = {
   themeColor: '#000000',
@@ -15,7 +17,7 @@ export const viewport: Viewport = {
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL('http://vendor.pataspare.co.ke'),
   title: {
     default: 'Pataspare',
     template: '%s | PataSpare - Your one stop solution for your auto parts needs'
@@ -45,37 +47,39 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <Container fluid className="App" style={{
-            padding: '0',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column'
-        }}>
-            
-            <Container id={`Header`} fluid  style={{
+        <AuthProvider>
+          <Container fluid className="App" style={{
                 padding: '0',
-                position: 'fixed',
-                top: '0',
-                zIndex: '20',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column'
             }}>
-              <Header />
+                
+                <Container fluid  style={{
+                    padding: '0',
+                    position: 'fixed',
+                    top: '0',
+                    zIndex: '20',
+                }}>
+                  <Header />
+                </Container>
+                <Container style={{
+                  marginTop: `${100}px`,
+                  paddingBottom: '10px,',
+                  paddingTop: '10px',
+                  flex: '1'
+                }} >
+                  {children}
+                </Container>
+                <Container className='footer' fluid style={{
+                  paddingTop: '20px',
+                  backgroundColor: '#212529',
+                  color: '#ffffff',
+                }}>
+                  <Footer />
+                </Container>
             </Container>
-            <Container style={{
-              marginTop: `${100}px`,
-              paddingBottom: '10px,',
-              paddingTop: '10px',
-              flex: '1'
-            }} >
-              {children}
-            </Container>
-            <Container className='footer' fluid style={{
-              paddingTop: '20px',
-              backgroundColor: '#212529',
-              color: '#ffffff',
-            }}>
-              <Footer />
-            </Container>
-        </Container>
+        </AuthProvider>
       </body>
     </html>
   )

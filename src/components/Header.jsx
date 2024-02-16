@@ -1,16 +1,16 @@
 'use client'
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 import logo from '../images/pataspare-logo.png'
 import AuthButton from "./AuthButton";
 import Image from "next/image";
 
 function Header(){
     return (
-        <Navbar collapseOnSelect expand="lg" style={{
-            borderBottom: '5px solid #343a40',
-            backgroundColor: '#007bff',
-        }}>
-            <Container>
+        <div id={`Header`}>
+            <Navbar collapseOnSelect expand="lg" style={{
+                borderBottom: '5px solid #343a40',
+                backgroundColor: '#007bff',
+            }}>
                 <Navbar.Brand href="/">
                 <Image
                     src={logo}
@@ -27,8 +27,8 @@ function Header(){
                     </Nav>
                     <AuthButton />
                 </Navbar.Collapse>
-            </Container>
-        </Navbar>
+            </Navbar>
+        </div>
     )
 }
 
