@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import ShopHeader from "@/components/vendor/ShopHeader";
 import type { Metadata, Viewport } from 'next'
 import { AuthProvider } from "@/context/AuthContext";
+import { RequireAuth } from '@/components/PrivateComponent';
 
 export const viewport: Viewport = {
   themeColor: '#000000',
@@ -34,6 +35,7 @@ function ShopManager({
       <html lang="en">
       <body>
         <AuthProvider>
+          <RequireAuth>
           <Container fluid className="App" style={{
               padding: '0',
               height: '100%',
@@ -58,6 +60,7 @@ function ShopManager({
                 {children}
               </Container>
           </Container>
+          </RequireAuth>
         </AuthProvider>
       </body>
     </html>

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import VendorHeader from "@/components/vendor/VendorHeader";
 import type { Metadata, Viewport } from 'next'
 import { AuthProvider } from "@/context/AuthContext";
+import { RequireAuth } from '@/components/PrivateComponent';
 // import { Inter } from 'next/font/google'
 
 export const viewport: Viewport = {
@@ -48,6 +49,7 @@ function DashboardLayout({
       <html lang="en">
       <body>
         <AuthProvider>
+          <RequireAuth>
           <Container fluid className="App" style={{
               padding: '0',
               height: '100%',
@@ -72,6 +74,7 @@ function DashboardLayout({
                 {children}
               </Container>
           </Container>
+          </RequireAuth>
         </AuthProvider>
       </body>
     </html>
